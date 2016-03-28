@@ -1,5 +1,4 @@
 
-
 export class Node {
     id: number;
     exitEdge: Edge[];
@@ -42,7 +41,7 @@ export class GraphGenerator {
         this.lastEdgeIndex = 0;
     }
 
-    addNode(graph: Graph, node: Node): number {
+    private addNode(graph: Graph, node: Node): number {
         graph.nodes.forEach(nodeInGraph => {
             let edgeFrom = new Edge(this.lastEdgeIndex++, node, nodeInGraph);
             let edgeTo = new Edge(this.lastEdgeIndex++, nodeInGraph, node);
