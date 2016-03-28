@@ -5,6 +5,7 @@ import {GraphGenerator} from './graph-generator.service';
 export function main() {
     describe('GraphGenerator Service', () => {
         let gg: GraphGenerator;
+        const N_NODES = 10;
 
         beforeEach(() => {
             gg = new GraphGenerator;
@@ -71,10 +72,28 @@ export function main() {
         });
 
         it('should return graph with n-1 edges from each node', () => {
-            const N_NODES = 10;
             let g = gg.generate(N_NODES);
             g.nodes.forEach(node => {
                 expect(node.exitEdge.length).toEqual(N_NODES-1);
+                expect(node.enterEdge.length).toEqual(N_NODES-1);
+            });
+        });
+
+        it('should return graph with edges not pointed to exit node', () => {
+            let g = gg.generate(N_NODES);
+            g.nodes.forEach(node => {
+                node.exitEdge.forEach(edge => {
+                    expect(edge.to).not.toEqual(node);
+                });
+            });
+        });
+
+        it('should return graph with edges pointed to enter node', () => {
+            let g = gg.generate(N_NODES);
+            g.nodes.forEach(node => {
+                node.enterEdge.forEach(edge => {
+                    expect(edge.to).toEqual(node);
+                });
             });
         });
     });

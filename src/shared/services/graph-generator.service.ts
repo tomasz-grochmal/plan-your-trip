@@ -34,8 +34,8 @@ export class Graph {
 }
 
 export class GraphGenerator {
-    private lastNodeIndex: number
-    private lastEdgeIndex: number
+    private lastNodeIndex: number;
+    private lastEdgeIndex: number;
 
     constructor() {
         this.lastNodeIndex = 0;
