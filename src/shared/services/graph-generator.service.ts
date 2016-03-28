@@ -41,6 +41,15 @@ export class GraphGenerator {
         this.lastEdgeIndex = 0;
     }
 
+    generate(nNodes: number): Graph {
+        let graph = new Graph();
+        for (var i = 0; i < nNodes; i++) {
+            let node = new Node();
+            this.addNode(graph, node);
+        }
+        return graph;
+    }
+
     private addNode(graph: Graph, node: Node): number {
         graph.nodes.forEach(nodeInGraph => {
             let edgeFrom = new Edge(this.lastEdgeIndex++, node, nodeInGraph);
@@ -54,14 +63,5 @@ export class GraphGenerator {
         });
         node.id = this.lastNodeIndex++;
         return graph.nodes.push(node);
-    }
-
-    generate(nNodes: number): Graph {
-        let graph = new Graph();
-        for (var i = 0; i < nNodes; i++) {
-            let node = new Node();
-            this.addNode(graph, node);
-        }
-        return graph;
     }
 }

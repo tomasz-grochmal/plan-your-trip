@@ -9,7 +9,7 @@ import {GraphGenerator} from '../../shared/services/graph-generator.service';
 })
 export class GraphComponent {
     constructor(public graphGenerator: GraphGenerator) {}
-    
+
     createGraph(): boolean {
         let graph = this.graphGenerator.generate(10);
         return true;

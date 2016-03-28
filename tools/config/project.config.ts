@@ -7,7 +7,7 @@ export class ProjectConfig extends SeedConfig {
 
   constructor() {
     super();
-    // this.APP_TITLE = 'Put name of your app here';
+    this.APP_TITLE = 'Plan your trip';
     let additional_deps: InjectableDependency[] = [
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
@@ -22,5 +22,7 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.APP_DEST}/assets/scss/global.css`, inject: true},
       { src: `${this.ASSETS_SRC}/main.css`, inject: true },
     ];
+    (<any>this.SYSTEM_CONFIG_DEV.paths)['vis'] =
+        `${this.APP_BASE}node_modules/vis/dist`;
   }
 }
