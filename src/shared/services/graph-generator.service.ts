@@ -1,22 +1,22 @@
 
 
 export class Node {
-    id: Number;
-    from: Edge[];
-    to: Edge[];
-    constructor(_id: Number) {
-        this.id = _id;
-        this.from = [];
-        this.to = [];
+    id: number;
+    exitEdge: Edge[];
+    enterEdge: Edge[];
+
+    constructor() {
+        this.exitEdge = [];
+        this.enterEdge = [];
     }
 }
 
 export class Edge {
-    id: Number;
+    id: number;
     from: Node;
     to: Node;
 
-    constructor(_id: Number, _from: Node, _to: Node) {
+    constructor(_id: number, _from: Node, _to: Node) {
         this.id = _id;
         this.from = _from;
         this.to = _to;
@@ -26,23 +26,43 @@ export class Edge {
 export class Graph {
     nodes: Node[];
     edges: Edge[];
+
     constructor() {
         this.nodes = [];
         this.edges = [];
     }
-    addNode(node: Node): boolean {
-        this.nodes.push(node);
-        return false;
-    }
 }
 
 export class GraphGenerator {
-  generate(nNodes: Number):Graph {
-      let graph = new Graph();
-      for (var i = 0; i < nNodes; i++) {
-          let node = new Node(i);
-          graph.addNode(node);
-      }
-      return graph;
-  }
+    private lastNodeIndex: number
+    private lastEdgeIndex: number
+
+    constructor() {
+        this.lastNodeIndex = 0;
+        this.lastEdgeIndex = 0;
+    }
+
+    addNode(graph: Graph, node: Node): number {
+        graph.nodes.forEach(nodeInGraph => {
+            let edgeFrom = new Edge(this.lastEdgeIndex++, node, nodeInGraph);
+            let edgeTo = new Edge(this.lastEdgeIndex++, nodeInGraph, node);
+            graph.edges.push(edgeFrom);
+            graph.edges.push(edgeTo);
+            nodeInGraph.enterEdge.push(edgeFrom);
+            nodeInGraph.exitEdge.push(edgeTo);
+            node.enterEdge.push(edgeTo);
+            node.exitEdge.push(edgeFrom);
+        });
+        node.id = this.lastNodeIndex++;
+        return graph.nodes.push(node);
+    }
+
+    generate(nNodes: number): Graph {
+        let graph = new Graph();
+        for (var i = 0; i < nNodes; i++) {
+            let node = new Node();
+            this.addNode(graph, node);
+        }
+        return graph;
+    }
 }

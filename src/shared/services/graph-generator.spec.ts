@@ -22,10 +22,60 @@ export function main() {
             expect(g.edges.length).toEqual(0);
         });
 
-        it('should return graph with 2 nodes and one edge between', () => {
+        it('should return graph with 2 nodes and 2 edges', () => {
             let g = gg.generate(2);
             expect(g.nodes.length).toEqual(2);
             expect(g.edges.length).toEqual(2);
+        });
+
+        it('should return graph with edges pointed to connected nodes', () => {
+            let g = gg.generate(2);
+            let nodeA = g.nodes[0];
+            let nodeB = g.nodes[1];
+            let edgeA = g.edges[0];
+            let edgeB = g.edges[1];
+            if(edgeA.from.id === nodeA.id) {
+                expect(edgeA.from).toEqual(nodeA);
+                expect(edgeA.to).toEqual(nodeB);
+            } else {
+                expect(edgeA.from).toEqual(nodeB);
+                expect(edgeA.to).toEqual(nodeA);
+            }
+            if(edgeB.from.id === nodeA.id) {
+                expect(edgeB.from).toEqual(nodeA);
+                expect(edgeB.to).toEqual(nodeB);
+            } else {
+                expect(edgeB.from).toEqual(nodeB);
+                expect(edgeB.to).toEqual(nodeA);
+            }
+        });
+
+        it('should return graph with nodes with 1 exit and 1 enter edge', () => {
+            let g = gg.generate(2);
+            let nodeA = g.nodes[0];
+            let nodeB = g.nodes[1];
+            expect(nodeA.exitEdge.length).toEqual(1);
+            expect(nodeA.enterEdge.length).toEqual(1);
+            expect(nodeB.exitEdge.length).toEqual(1);
+            expect(nodeB.enterEdge.length).toEqual(1);
+        });
+
+        it('should return graph with nodes pointed to connected edges', () => {
+            let g = gg.generate(2);
+            let nodeA = g.nodes[0];
+            let nodeB = g.nodes[1];
+            expect(nodeA.exitEdge[0].from).toEqual(nodeA);
+            expect(nodeA.exitEdge[0].to).toEqual(nodeB);
+            expect(nodeA.enterEdge[0].from).toEqual(nodeB);
+            expect(nodeA.enterEdge[0].to).toEqual(nodeA);
+        });
+
+        it('should return graph with n-1 edges from each node', () => {
+            const N_NODES = 10;
+            let g = gg.generate(N_NODES);
+            g.nodes.forEach(node => {
+                expect(node.exitEdge.length).toEqual(N_NODES-1);
+            });
         });
     });
 }
