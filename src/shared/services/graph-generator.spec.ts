@@ -1,6 +1,6 @@
 //// <reference path="../../../typings/main/ambient/jasmine/index.d.ts" />
 
-import {GraphGenerator, Graph} from './graph-generator.service';
+import {GraphGenerator} from './graph-generator.service';
 
 export function main() {
     describe('GraphGenerator Service', () => {
@@ -10,16 +10,22 @@ export function main() {
             gg = new GraphGenerator;
         });
 
-        it('graph with 0 nodes should return empty graph', () => {
+        it('should return graph with 0 nodes', () => {
             let g = gg.generate(0);
             expect(g.nodes.length).toEqual(0);
             expect(g.edges.length).toEqual(0);
         });
-        
-        it('graph with one node should have 1 node and 0 edge', () => {
+
+        it('should return graph with 1 node and 0 edges', () => {
             let g = gg.generate(1);
             expect(g.nodes.length).toEqual(1);
             expect(g.edges.length).toEqual(0);
+        });
+
+        it('should return graph with 2 nodes and one edge between', () => {
+            let g = gg.generate(2);
+            expect(g.nodes.length).toEqual(2);
+            expect(g.edges.length).toEqual(2);
         });
     });
 }
