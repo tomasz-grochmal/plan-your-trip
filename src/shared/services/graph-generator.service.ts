@@ -36,12 +36,12 @@ export class GraphGenerator {
     private lastNodeIndex: number;
     private lastEdgeIndex: number;
 
-    constructor() {
-        this.lastNodeIndex = 0;
-        this.lastEdgeIndex = 0;
-    }
+    constructor() { }
 
     generate(nNodes: number): Graph {
+        this.lastNodeIndex = 0;
+        this.lastEdgeIndex = 0;
+
         let graph = new Graph();
         for (var i = 0; i < nNodes; i++) {
             let node = new Node();

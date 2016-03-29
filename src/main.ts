@@ -3,13 +3,15 @@ import {bootstrap} from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, APP_BASE_HREF} from 'angular2/router';
 import {AppComponent} from './app/components/app.component';
 import {GraphGenerator} from './shared/services/graph-generator.service';
+import {VisComponent} from './shared/components/vis.component';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(AppComponent, [
   ROUTER_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
-  provide(GraphGenerator, {useClass: GraphGenerator})
+  provide(GraphGenerator, {useClass: GraphGenerator}),
+  provide(VisComponent, {useClass: VisComponent})
 ]);
 
 // In order to start the Service Worker located at "./sw.js"
